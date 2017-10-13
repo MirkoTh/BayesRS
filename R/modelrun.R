@@ -42,6 +42,8 @@
 #' @importFrom grid grid.draw
 #' @importFrom ggplot2 ggplot aes geom_point geom_segment coord_flip ggtitle labs theme_bw theme annotate scale_y_continuous element_blank element_text element_line rel
 #' @importFrom graphics plot
+#' @importFrom grDevices dev.new
+#' @importFrom utils globalVariables
 #' @export
 
 
