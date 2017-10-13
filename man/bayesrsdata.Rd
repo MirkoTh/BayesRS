@@ -108,7 +108,8 @@ bf <- out[[1]]
 bf
 
 ## -----------------------------------------------------------------
-## Example 2: Estimation of Bayes Factors from a continuous independent variable with random slopes that are correlated with the random slopes of a categorical variable. 
+## Example 2: Estimation of Bayes Factors from a continuous independent variable with random slopes that 
+# are correlated with the random slopes of a categorical variable. 
 ## - Repeated measures for each participant
 ## - a continuous IV with 5 values: x.time
 ## - a categorical variable with 2 levels: x.domain

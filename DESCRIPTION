@@ -3,7 +3,7 @@ Type: Package
 Title: Bayes Factors for Hierarchical Linear Models with Continuous Predictors
 Version: 0.1.0
 Authors@R: c(person(given="Mirko", family="Thalmann", role=c("aut", "cre"),
-             email="mirko.thalmann@psychologie.uzh.ch"), person(given="Marcel",
+             email="mirkothalmann@hotmail.com"), person(given="Marcel",
              family="Niklaus", role="aut"), person(given="Klaus",
              family="Oberauer", role="ctb"),person(given="John",
              family="Kruschke", role="ctb"))
