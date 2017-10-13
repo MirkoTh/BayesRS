@@ -139,5 +139,5 @@ Spiegelhalter, D. J., Best, N. G., Carlin, B. P., & van der Linde, A. (2002). Ba
 Wetzels, R., Raaijmakers, J. G. W., Jakab, E., & Wagenmakers, E.-J. (2009). How to quantify support for and against the null hypothesis: A flexible WinBUGS implementation of a default Bayesian t test. Psychonomic Bulletin & Review, 16(4), 752-760. https://doi.org/10.3758/PBR.16.4.752
 }
 \author{
-Thalmann, M., Niklaus, M.
+Thalmann, M., Niklaus, M. Part of this package uses code from John Kruschke.
 }
