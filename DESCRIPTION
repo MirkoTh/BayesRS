@@ -13,12 +13,13 @@ Imports:
     ggplot2,
     metRology,
     grid,
-    reshape
+    reshape,
+    methods,
+    coda
 Maintainer: The package maintainer <mirko.thalmann@psychologie.uzh.ch>
 Description: Runs hierarchical linear Bayesian models. Samples from the posterior
     distributions of model parameters in JAGS. Computes Bayes Factors for group 
 	parameters of interest with the Savage-Dickey density ratio 
-	(e.g., Wetzels, Raaijmakers, Jakab, Wagenmakers (2009))
 License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
