@@ -9,9 +9,9 @@ data(bayesrsdata) #load data
 
 ## JAGS Sampler Settings
 # -----------------
-nadapt = 200           # number of adaptation steps
-nburn = 200            # number of burn-in samples
-mcmcstep = 2000        # number of saved mcmc samples
+nadapt = 150           # number of adaptation steps
+nburn = 150            # number of burn-in samples
+mcmcstep = 1500        # number of saved mcmc samples
 
 # Define model structure; 
 dat.str <- data.frame(iv = c("x.time"), 
@@ -43,9 +43,9 @@ bf
 
 ## JAGS Sampler Settings
 # -----------------
-nadapt = 100           # number of adaptation steps
-nburn = 100            # number of burn-in samples
-mcmcstep = 2000        # number of saved mcmc samples
+nadapt = 150           # number of adaptation steps
+nburn = 150            # number of burn-in samples
+mcmcstep = 1500        # number of saved mcmc samples
 
 
 # Define model structure;
