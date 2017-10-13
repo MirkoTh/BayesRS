@@ -1,5 +1,6 @@
 ## -----------------------------------------------------------------
-## Example 1: Estimation of Bayes Factors from a continuous independent variable with random slopes. 
+## Example 1: Estimation of Bayes Factors from a continuous
+## independent variable (IV) with random slopes
 ## - repeated measures for each participant
 ## - continuous variable with 5 values: x.time
 ## ------------------------------------------------------------------
@@ -15,7 +16,8 @@ mcmcstep = 100000       # number of saved mcmc samples
 # Define model structure; 
 dat.str <- data.frame(iv = c("x.time"), 
                       type = c("cont"),
-                      subject = c(1)) # name of random variable (here 'subject') needs to match data frame
+                      subject = c(1))
+# name of random variable (here 'subject') needs to match data frame
 
 # Run modelrun function
 out <- modelrun(data = bayesrsdata, 
@@ -31,8 +33,9 @@ bf <- out[[1]]
 bf
 
 ## -----------------------------------------------------------------
-## Example 2: Estimation of Bayes Factors from a continuous independent variable with random slopes that 
-# are correlated with the random slopes of a categorical variable. 
+## Example 2: Estimation of Bayes Factors from a continuous
+## independent variable with random slopes that 
+## are correlated with the random slopes of a categorical variable. 
 ## - Repeated measures for each participant
 ## - a continuous IV with 5 values: x.time
 ## - a categorical variable with 2 levels: x.domain
@@ -45,10 +48,12 @@ nburn = 1000            # number of burn-in samples
 mcmcstep = 100000       # number of saved mcmc samples
 
 
-# Define model structure; 
-dat.str <- data.frame(iv = c("x.time", "x.domain"), #order: continuous variable(s) needs to go first
+# Define model structure;
+# order of IVs: continuous variable(s) needs to go first
+dat.str <- data.frame(iv = c("x.time", "x.domain"),
                       type = c("cont", "cat"),
-                      subject = c(1,1)) # name of random variable (here 'subject') needs to match data frame
+                      subject = c(1,1))
+# name of random variable (here 'subject') needs to match data frame
 
 # Define random effect structure on interaction for each random variable
 ias.subject <- matrix(0, nrow=nrow(dat.str), ncol = nrow(dat.str))
@@ -73,6 +78,7 @@ out <- modelrun(data = bayesrsdata,
                 corstr = corstr,
                 plot.post = 1)
 
-# Obtain Bayes factors for continous main effect, categorical main effect, and their interaction
+# Obtain Bayes factors for continous main effect,
+# categorical main effect, and their interaction
 bf <- out[[1]] 
 bf
