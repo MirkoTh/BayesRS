@@ -49,7 +49,6 @@
 
 modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt = NULL, nburn = NULL, nsteps = NULL,
                      checkconv = NULL, mcmc.save.indiv = NULL, plot.post = NULL ,dic = NULL,path=NULL){
-  globalVariables(c("varnames","hdiLow","hdiHigh"))
   if (is.null(nadapt) ) nadapt=2000
   if (is.null(nburn) ) nburn=2000
   if (is.null(nsteps) ) nsteps=100000

@@ -11,7 +11,7 @@ plotPostMT_HDImeans2 = function(paramSampleVec, HDIlow,HDIhi, ylab=NULL ,
   if (is.null(xlim)) {
     xlim=range( c( 0 , paramSampleVec))
   }
-  
+  varnames=hdiLow=hdiHigh=NULL
   # in case xlim is set to 0, and some value has been given to xrange, center plot symmetrically on zero, using maximal extension in case range is set to 0, and given range otherwise
   if (xlim[1]==0)  {
     maxext <- max(abs(min(paramSampleVec$samples)), abs(max(paramSampleVec$samples)))  #largest extension into positive or negative range
