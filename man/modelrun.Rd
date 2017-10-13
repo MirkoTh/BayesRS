@@ -39,7 +39,7 @@ modelrun(data, dv, dat.str, randvar.ia = NULL, corstr = NULL,
 returns a list with components:
 \itemize{
  \item \code{bf}: a \code{data.frame} object with the Bayes Factor estimates of the group parameters (aka fixed effects).
- \item \code{mcmcdf}: a \code{data.frame} object with the saved mcmc chains.
+ \item \code{mcmcdf}: a \code{data.frame} object with the saved MCMC chains.
  \item \code{dic}: DIC of the fitted model.
 }
 }
@@ -66,9 +66,10 @@ data(bayesrsdata) #load data
 
 ## JAGS Sampler Settings
 # -----------------
-nadapt = 200           # number of adaptation steps
-nburn = 200            # number of burn-in samples
-mcmcstep = 2000        # number of saved mcmc samples
+# nr of adaptation, burn-in, and saved mcmc steps only for exemplary use
+nadapt = 150           # number of adaptation steps
+nburn = 150            # number of burn-in samples
+mcmcstep = 1500        # number of saved mcmc samples
 
 # Define model structure; 
 dat.str <- data.frame(iv = c("x.time"), 
@@ -99,10 +100,11 @@ bf
 ## ------------------------------------------------------------------
 
 ## JAGS Sampler Settings
+# nr of adaptation, burn-in, and saved mcmc steps only for exemplary use
 # -----------------
-nadapt = 100           # number of adaptation steps
-nburn = 100            # number of burn-in samples
-mcmcstep = 2000        # number of saved mcmc samples
+nadapt = 150           # number of adaptation steps
+nburn = 150            # number of burn-in samples
+mcmcstep = 1500        # number of saved mcmc samples, min. should be 100'000
 
 
 # Define model structure;

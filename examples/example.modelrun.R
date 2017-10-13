@@ -9,6 +9,7 @@ data(bayesrsdata) #load data
 
 ## JAGS Sampler Settings
 # -----------------
+# nr of adaptation, burn-in, and saved mcmc steps only for exemplary use
 nadapt = 150           # number of adaptation steps
 nburn = 150            # number of burn-in samples
 mcmcstep = 1500        # number of saved mcmc samples
@@ -42,10 +43,11 @@ bf
 ## ------------------------------------------------------------------
 
 ## JAGS Sampler Settings
+# nr of adaptation, burn-in, and saved mcmc steps only for exemplary use
 # -----------------
 nadapt = 150           # number of adaptation steps
 nburn = 150            # number of burn-in samples
-mcmcstep = 1500        # number of saved mcmc samples
+mcmcstep = 1500        # number of saved mcmc samples, min. should be 100'000
 
 
 # Define model structure;

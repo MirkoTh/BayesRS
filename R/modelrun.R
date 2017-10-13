@@ -23,7 +23,7 @@
 #' @return returns a list with components:
 #' \itemize{
 #'  \item \code{bf}: a \code{data.frame} object with the Bayes Factor estimates of the group parameters (aka fixed effects).
-#'  \item \code{mcmcdf}: a \code{data.frame} object with the saved mcmc chains.
+#'  \item \code{mcmcdf}: a \code{data.frame} object with the saved MCMC chains.
 #'  \item \code{dic}: DIC of the fitted model.
 #' }
 #' @author Thalmann, M., Niklaus, M. Part of this package uses code from John Kruschke.
