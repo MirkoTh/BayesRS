@@ -1,7 +1,6 @@
 plotPostMT_HDImeans2 = function(paramSampleVec, HDIlow,HDIhi, ylab=NULL ,
                       xlab=NULL , xlim=NULL, main=NULL, credMass=NULL, pltitle=NULL, 
                       showHDI = NULL, colflag = NULL, bfs = NULL, ylim=NULL, bfpos = NULL) {
-  globalVariables("varnames","hdiLow","hdiHigh")
   if ( is.null(xlab) ) xlab="Parameter"
   if ( is.null(main) ) main=""
   if ( is.null(ylab) ) ylab="Posterior Density"
@@ -57,16 +56,16 @@ plotPostMT_HDImeans2 = function(paramSampleVec, HDIlow,HDIhi, ylab=NULL ,
 
   # Plot HDIs with means
   if(colflag == 1){
-    p1 <- ggplot(postSummary, aes(varnames, mean)) + geom_point(shape = 1, size = 5) + coord_flip() +
-      geom_segment(aes(x = seq(1,nrow(postSummary)), xend = seq(1,nrow(postSummary)),
+    p1 <- ggplot(postSummary, aes_string(varnames, mean)) + geom_point(shape = 1, size = 5) + coord_flip() +
+      geom_segment(aes_string(x = seq(1,nrow(postSummary)), xend = seq(1,nrow(postSummary)),
                        y = hdiLow, yend = hdiHigh), colour = "black", size=1.75, lineend = "round")  +
-      geom_segment(aes(x = 0.5, xend = nrow(postSummary)+0.5, y = 0, yend = 0), colour = "red", size = 1, lineend = "round")
-      #geom_point(aes(x = seq(1,nrow(postSummary)), y=mean, shape = 1), colour = "black", size=5, shape = rep(1,nrow(postSummary)))
+      geom_segment(aes_string(x = 0.5, xend = nrow(postSummary)+0.5, y = 0, yend = 0), colour = "red", size = 1, lineend = "round")
+      #geom_point(aes_string(x = seq(1,nrow(postSummary)), y=mean, shape = 1), colour = "black", size=5, shape = rep(1,nrow(postSummary)))
   }  else {
-    p1 <- ggplot(postSummary, aes(varnames, mean)) + geom_point(shape = 1, size = 5) + coord_flip() +
-      geom_segment(aes(x = seq(1,nrow(postSummary)), xend = seq(1,nrow(postSummary)), y = hdiLow, yend = hdiHigh),
+    p1 <- ggplot(postSummary, aes_string(varnames, mean)) + geom_point(shape = 1, size = 5) + coord_flip() +
+      geom_segment(aes_string(x = seq(1,nrow(postSummary)), xend = seq(1,nrow(postSummary)), y = hdiLow, yend = hdiHigh),
                    colour = "black", size=1.75, lineend = "round")# +
-      #geom_point(aes(x = seq(1,nrow(postSummary)), y=mean), colour = "black", size=5, shape = rep(1,nrow(postSummary)))
+      #geom_point(aes_string(x = seq(1,nrow(postSummary)), y=mean), colour = "black", size=5, shape = rep(1,nrow(postSummary)))
   }
   
   

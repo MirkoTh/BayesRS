@@ -3,6 +3,7 @@
 export(modelrun)
 importFrom(coda,gelman.diag)
 importFrom(ggplot2,aes)
+importFrom(ggplot2,aes_string)
 importFrom(ggplot2,annotate)
 importFrom(ggplot2,coord_flip)
 importFrom(ggplot2,element_blank)

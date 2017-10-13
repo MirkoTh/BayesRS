@@ -40,7 +40,7 @@
 #' @importFrom coda gelman.diag
 #' @importFrom methods show
 #' @importFrom grid grid.draw
-#' @importFrom ggplot2 ggplot aes geom_point geom_segment coord_flip ggtitle labs theme_bw theme annotate scale_y_continuous element_blank element_text element_line rel
+#' @importFrom ggplot2 ggplot aes geom_point geom_segment coord_flip ggtitle labs theme_bw theme annotate scale_y_continuous element_blank element_text element_line rel aes_string
 #' @importFrom graphics plot
 #' @importFrom grDevices dev.new
 #' @importFrom utils globalVariables
@@ -49,6 +49,7 @@
 
 modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt = NULL, nburn = NULL, nsteps = NULL,
                      checkconv = NULL, mcmc.save.indiv = NULL, plot.post = NULL ,dic = NULL,path=NULL){
+  globalVariables(c("varnames","hdiLow","hdiHigh"))
   if (is.null(nadapt) ) nadapt=2000
   if (is.null(nburn) ) nburn=2000
   if (is.null(nsteps) ) nsteps=100000
