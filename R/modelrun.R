@@ -33,7 +33,7 @@
 #' Wetzels, R., Raaijmakers, J. G. W., Jakab, E., & Wagenmakers, E.-J. (2009). How to quantify support for and against the null hypothesis: A flexible WinBUGS implementation of a default Bayesian t test. Psychonomic Bulletin & Review, 16(4), 752-760. https://doi.org/10.3758/PBR.16.4.752
 #' @example examples/example.modelrun.R
 #'
-#' @importFrom stats dnorm sd update aggregate
+#' @importFrom stats dnorm sd update aggregate var density median
 #' @importFrom reshape melt
 #' @importFrom metRology dt.scaled
 #' @importFrom rjags coda.samples load.module jags.model
@@ -41,12 +41,12 @@
 #' @importFrom methods show
 #' @importFrom grid grid.draw
 #' @importFrom ggplot2 ggplot aes geom_point geom_segment coord_flip ggtitle labs theme_bw theme annotate scale_y_continuous element_blank element_text element_line rel
+#' @importFrom graphics plot
 #' @export
 
 
 modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt = NULL, nburn = NULL, nsteps = NULL,
                      checkconv = NULL, mcmc.save.indiv = NULL, plot.post = NULL ,dic = NULL,path=NULL){
-
   if (is.null(nadapt) ) nadapt=2000
   if (is.null(nburn) ) nburn=2000
   if (is.null(nsteps) ) nsteps=100000
@@ -319,7 +319,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
       if (any(is.na(ind))){
         ind <- ind[1:(min(which(is.na(ind)))-1)]
       }
-      x11()
+      dev.new()
       plot( codaSamples[,ind])
       show( gelman.diag(codaSamples[,ind], multivariate = F))
     }
@@ -333,12 +333,12 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
           broke <- split(as.data.frame(ind), rep(1:ceiling(nrow(ind)/4),each=4))
           for (i in 1:length(broke)){
             ind <- broke[[i]]
-            x11()
+            dev.new()
             plot(codaSamples[,paste0(params.corr[dfs], "[", ind[,1],",",ind[,2],"]")])
             show( gelman.diag(codaSamples[,paste0(params.corr[dfs], "[", ind[,1],",",ind[,2],"]")], multivariate = F))
           }
         } else{
-          x11()
+          dev.new()
           plot(codaSamples[,paste0(params.corr[dfs], "[", ind[,1],",",ind[,2],"]")])
           show( gelman.diag(codaSamples[,paste0(params.corr[dfs], "[", ind[,1],",",ind[,2],"]")], multivariate = F))
         }
@@ -355,7 +355,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
           if (any(is.na(ind))){
             ind <- ind[1:(min(which(is.na(ind)))-1)]
           }
-          x11()
+          dev.new()
           plot(codaSamples[,ind])
         }
       }
@@ -462,7 +462,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
                                     ylim = c(min(plot.bs$samples)-.1, max(plot.bs$samples)+.1),
                                     showHDI = 1, colflag = 1, bfs = bf1, bfpos = min(plot.bs$samples))
     if(plot.post==1){
-      x11()
+      dev.new()
       grid.draw(pl.post)} # n.b. posteriors are in z-transformed space
     #### from correlation structure ####
   }
@@ -523,7 +523,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
                                       ylim = c(min(plot.bs$samples)-.1, max(plot.bs$samples)+.1),
                                       showHDI = 1, colflag = 1, bfs = bf2, bfpos = min(plot.bs$samples))
       if(plot.post==1){
-        x11()
+        dev.new()
         grid.draw(pl.post)} # n.b. posteriors are in z-transformed space
       #
     }

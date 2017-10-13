@@ -1,7 +1,7 @@
 plotPostMT_HDImeans2 = function(paramSampleVec, HDIlow,HDIhi, ylab=NULL ,
                       xlab=NULL , xlim=NULL, main=NULL, credMass=NULL, pltitle=NULL, 
                       showHDI = NULL, colflag = NULL, bfs = NULL, ylim=NULL, bfpos = NULL) {
-  
+  globalVariables("varnames","hdiLow","hdiHigh")
   if ( is.null(xlab) ) xlab="Parameter"
   if ( is.null(main) ) main=""
   if ( is.null(ylab) ) ylab="Posterior Density"
