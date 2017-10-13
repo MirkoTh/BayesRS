@@ -66,9 +66,9 @@ data(bayesrsdata) #load data
 
 ## JAGS Sampler Settings
 # -----------------
-nadapt = 1000           # number of adaptation steps
-nburn = 1000            # number of burn-in samples
-mcmcstep = 100000       # number of saved mcmc samples
+nadapt = 200           # number of adaptation steps
+nburn = 200            # number of burn-in samples
+mcmcstep = 2000        # number of saved mcmc samples
 
 # Define model structure; 
 dat.str <- data.frame(iv = c("x.time"), 
@@ -100,9 +100,9 @@ bf
 
 ## JAGS Sampler Settings
 # -----------------
-nadapt = 1000           # number of adaptation steps
-nburn = 1000            # number of burn-in samples
-mcmcstep = 100000       # number of saved mcmc samples
+nadapt = 100           # number of adaptation steps
+nburn = 100            # number of burn-in samples
+mcmcstep = 2000        # number of saved mcmc samples
 
 
 # Define model structure;
@@ -132,8 +132,7 @@ out <- modelrun(data = bayesrsdata,
                 nsteps = mcmcstep,
                 checkconv = 0, 
                 mcmc.save.indiv = 1, 
-                corstr = corstr,
-                plot.post = 1)
+                corstr = corstr)
 
 # Obtain Bayes factors for continous main effect,
 # categorical main effect, and their interaction

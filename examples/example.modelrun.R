@@ -75,8 +75,7 @@ out <- modelrun(data = bayesrsdata,
                 nsteps = mcmcstep,
                 checkconv = 0, 
                 mcmc.save.indiv = 1, 
-                corstr = corstr,
-                plot.post = 1)
+                corstr = corstr)
 
 # Obtain Bayes factors for continous main effect,
 # categorical main effect, and their interaction
