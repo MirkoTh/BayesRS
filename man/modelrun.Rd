@@ -69,7 +69,7 @@ data(bayesrsdata) #load data
 # nr of adaptation, burn-in, and saved mcmc steps only for exemplary use
 nadapt = 150           # number of adaptation steps
 nburn = 150            # number of burn-in samples
-mcmcstep = 1500        # number of saved mcmc samples
+mcmcstep = 1500        # number of saved mcmc samples, min. should be 100'000
 
 # Define model structure; 
 dat.str <- data.frame(iv = c("x.time"), 
