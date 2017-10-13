@@ -26,11 +26,11 @@
 #'  \item \code{mcmcdf}: a \code{data.frame} object with the saved mcmc chains.
 #'  \item \code{dic}: DIC of the fitted model.
 #' }
-#' @author Thalmann, M., Niklaus, M.
+#' @author Thalmann, M., Niklaus, M. Part of this package uses code from John Kruschke.
 #' @references
 #' Spiegelhalter, D. J., Best, N. G., Carlin, B. P., & van der Linde, A. (2002). Bayesian measures of model complexity and fit. Journal of the Royal Statistical Society: Series B (Statistical Methodology), 64(4), 583.
-#' 
-#' Wetzels, R., Raaijmakers, J. G. W., Jakab, E., & Wagenmakers, E.-J. (2009). How to quantify support for and against the null hypothesis: A flexible WinBUGS implementation of a default Bayesian t test. Psychonomic Bulletin & Review, 16(4), 752-760. https://doi.org/10.3758/PBR.16.4.752 
+#'
+#' Wetzels, R., Raaijmakers, J. G. W., Jakab, E., & Wagenmakers, E.-J. (2009). How to quantify support for and against the null hypothesis: A flexible WinBUGS implementation of a default Bayesian t test. Psychonomic Bulletin & Review, 16(4), 752-760. https://doi.org/10.3758/PBR.16.4.752
 #' @example examples/example.modelrun.R
 #'
 #' @importFrom stats dnorm sd update aggregate
@@ -46,7 +46,7 @@
 
 modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt = NULL, nburn = NULL, nsteps = NULL,
                      checkconv = NULL, mcmc.save.indiv = NULL, plot.post = NULL ,dic = NULL,path=NULL){
-  
+
   if (is.null(nadapt) ) nadapt=2000
   if (is.null(nburn) ) nburn=2000
   if (is.null(nsteps) ) nsteps=100000
@@ -64,7 +64,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
   if (is.null(corstr)) corstr=rep(list(matrix(0)),length(add.vars))
   if (any(dat.str$type == "cat")){
     nrcat.act <- sum(dat.str$type == "cat")
-    
+
     tmp <- lapply(X = data, FUN = levels)
     lvls <- tmp[check]
     codevar <- list()
@@ -97,12 +97,12 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
         names(dat.str.add) <- c("iv", "type", c(add.vars))
         dat.str <- rbind(dat.str, dat.str.add)
       }
-      
+
       change<-names(dat.str[3:ncol(dat.str)])
       if (length(change)>1){
         dat.str[,3:ncol(dat.str)]<-lapply(dat.str[,change],as.numeric)
       } else {dat.str[,3:ncol(dat.str)]<-as.numeric(dat.str[,change])}
-      
+
       # and update data df
       data <- data[,which(names(data)!=check[i])]
       data <- cbind(data, codevar[[i]])
@@ -138,7 +138,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
       }
       corstr<-corstr.tmp
     }
-    
+
     # same for interaction df
     if(any(unlist(lapply(randvar.ia,sum))!=0)){
       ls <- unlist(unname(lapply(lvls, FUN = function(x) length(x))))
@@ -167,15 +167,15 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
   }
   if (is.null(randvar.ia)) randvar.ia=replicate(length(names(dat.str[3:ncol(dat.str)])),
                                                 matrix(0, nrow = nrow(dat.str), ncol = nrow(dat.str)), simplify = F)
-  
-  
+
+
   data <- data[!is.na(data[,dv]),]
   randnames <- names(dat.str[3:ncol(dat.str)])
   contnames <- as.character(dat.str$iv[dat.str$type == "cont"])
   catnames <- as.character(dat.str$iv[dat.str$type == "cat"])
   nrcont <- length(contnames)
   nrcat <- length(catnames)
-  
+
   f.sub<-function(x){
     z=0
     if(x!=0){
@@ -188,12 +188,12 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
     ls.calc <- matrix(ls,nrow=1)
     nrIA.min<-sum(unlist(apply((ls.calc-2),MARGIN = 2,FUN=f.sub)))
   }
-  
+
   # cont as numeric predictors
   contvars = which(names(data) %in% c(as.character(dat.str$iv[dat.str$type == "cont"]), dv))
   data[,contvars] <- mapply(data[,contvars], FUN = as.character)
   data[,contvars] <- mapply(data[,contvars], FUN = as.numeric)
-  
+
   # id and cat as factors
   catvars = which(names(data) %in% c(names(dat.str[3:ncol(dat.str)]), as.character(dat.str$iv[dat.str$type == "cat"])))
   if (length(catvars) > 1){
@@ -201,18 +201,18 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
   } else {
     data[,catvars] <- as.factor(data[,catvars])
   }
-  
+
   for (i in randnames){
     levels(data[,i]) <- 1:length(unique(data[,i]))
   }
-  
+
   # z-standardize ivs and cont dv
   mDV <- mean(data[,dv])
   sdDV <- sd(data[,dv])
   data$z.DV <- (data[,dv]-mDV)/sdDV
   nxs <- nrow(dat.str)
   X <- data.frame(matrix(NA, nrow = nrow(data), ncol = 1))
-  
+
   for (i in contnames){
     name.m <- paste("m", i, sep = "")
     name.sd <- paste("sd", i, sep = "")
@@ -232,12 +232,12 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
   }
   X <- as.data.frame(X[,2:ncol(X), drop = FALSE])
   Ndata <- length(data$z.DV)
-  
+
   dataList = list(
     y = data$z.DV ,
     Ndata = nrow(data)
   )
-  
+
   name.cyc <- vector()
   size.cyc <- vector()
   for (i in randnames){
@@ -248,11 +248,11 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
     dataList[[name.cyc[i]]] <- size.cyc[i]
     dataList[[randnames[i]]] <- as.numeric(data[,randnames[i]])
   }
-  
+
   for (i in names(X)){
     dataList[[i]] <- X[,which(i == names(X))]
   }
-  
+
   # write jags model with required parameters
   parameters <- c(modeltext(dat.str, randvar.ia, corstr,path))
   parms.int <- unique(unlist(parameters[["MU"]]))
@@ -262,12 +262,12 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
   params.mon <- unique(c(unlist(parameters[["MU"]]), unlist(parameters[["SIGMA"]])))
   params.mon<-params.mon[!is.na(params.mon)]
   params.mon <- params.mon[!grepl("mu.corr", x = params.mon)]
-  
+
   if (any(unlist(corstr)==1)){
     params.corr <- unique(unlist(parameters[["RHO"]]))
     params.mu.corr <- unique(unlist(parameters[["mu.corr"]]))
     params.mu.corr <- params.mu.corr[!grepl("mu.corr\\[1\\]", x = params.mu.corr)]
-    
+
     # prepare dfs for inverse wishart
     wishdf <- parameters[["wishdf"]]
     for (i in 1:length(wishdf)){
@@ -297,7 +297,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
   # Create, initialize, and adapt the model:
   jagsModel = jags.model( path , data=dataList ,
                           n.chains=nChains , n.adapt=adaptSteps )
-  
+
   # Burn-in:
   cat( "Burning in the MCMC chain...\n" )
   update( jagsModel, n.iter=burnInSteps )
@@ -307,7 +307,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
                              n.iter=nPerChain , thin=thinSteps)
   mcmcChain <- as.matrix(codaSamples)
   mcmcdf <- as.data.frame(mcmcChain)
-  
+
   #### convergence diagnostics ####
   if (checkconv == 1){
     # diagnostics look good
@@ -359,7 +359,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
           plot(codaSamples[,ind])
         }
       }
-      
+
       # and plot mus not in mu.corr df
       if(any(parameters[["pl.ind"]])){
         ind <- which(parameters[["pl.ind"]]==1)
@@ -386,13 +386,13 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
       }
     }
   }
-  
-  
+
+
   #### computation of bfs, and plotting of hdis and bfs ####
   b_post <- as.data.frame(cbind(mcmcdf[,parms.int]))#, mcmcdf$muNsyllG, mcmcdf$muiaG))
   names(b_post) <- parms.int
   # b_post <- b_post[,2:ncol(b_post), drop = FALSE]
-  
+
   scalecont <- sqrt(2)/4
   scalecat <- 1/2
   bf <- NA
@@ -418,7 +418,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
         counter <- counter + 1
       }
     }
-    
+
     pl.cat <- catnames[parameters[["pl.ind"]][(1+nrcont):(nrcat+nrcont)]]
     if (any(!is.na(pl.cat))) {
       for (i in pl.cat){
@@ -435,7 +435,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
         counter <- counter + 1
       }
     }
-    
+
     if (any(dat.str$type == "cat")){
       nrIA <- (length(catnames)+length(contnames)-1)*(nrcat.act+length(contnames))/2
       nrIA<-(length(catnames)+length(contnames))*(length(catnames)+length(contnames)-1)/2
@@ -468,7 +468,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
   }
   if(exists("params.mu.corr")){
     if (any(grepl("mu.corr", params.mu.corr))){
-      
+
       bf <- NA
       bf.names<-NA
       comp <- NA
@@ -487,7 +487,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
           bf.names<-c(bf.names,parameters[["corrnames"]][i-1])
         }
       }
-      
+
       comp <- NA
       ind <- (1+nrcont+1):(1+nrcat+nrcont)
       for (i in ind){
@@ -503,8 +503,8 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
           bf.names<-c(bf.names,parameters[["corrnames"]][i-1])
         }
       }
-      
-      
+
+
       bf <- bf[2:length(bf)]
       bf2 <- prettyNum(bf, digits = 2)
       bf.names<-bf.names[2:length(bf.names)]
@@ -533,7 +533,7 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
     meanDev <- mean(mcmcChain[,"deviance"])
     pD <- 0.5*var(mcmcChain[,"deviance"])
     DIC <- meanDev + pD}
-  
+
   if (exists("bf1") & exists("bf2")){
     return(list(rbind(bf.tog2,bf.tog1), mcmcdf, DIC))
   }
