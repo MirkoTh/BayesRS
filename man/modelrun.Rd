@@ -55,7 +55,6 @@ Bayes Factors are computed with the Savage-Dickey density ratio. We use the norm
 }
 }
 \examples{
-\dontrun{
 ## -----------------------------------------------------------------
 ## Example 1: Estimation of Bayes Factors from a continuous
 ## independent variable (IV) with random slopes
@@ -68,9 +67,9 @@ data(bayesrsdata) #load data
 ## JAGS Sampler Settings
 # -----------------
 # nr of adaptation, burn-in, and saved mcmc steps only for exemplary use
-nadapt = 2000           # number of adaptation steps
-nburn = 2000            # number of burn-in samples
-mcmcstep = 100000       # number of saved mcmc samples, min. should be 100'000
+nadapt = 100         # number of adaptation steps
+nburn = 10           # number of burn-in samples
+mcmcstep = 500       # number of saved mcmc samples, min. should be 100'000
 
 # Define model structure;
 dat.str <- data.frame(iv = c("x.time"),
@@ -103,9 +102,9 @@ bf
 ## JAGS Sampler Settings
 # nr of adaptation, burn-in, and saved mcmc steps only for exemplary use
 # -----------------
-nadapt = 2000           # number of adaptation steps
-nburn = 2000           # number of burn-in samples
-mcmcstep = 100000        # number of saved mcmc samples, min. should be 100'000
+nadapt = 100         # number of adaptation steps
+nburn = 10           # number of burn-in samples
+mcmcstep = 500       # number of saved mcmc samples, min. should be 100'000
 
 
 # Define model structure;
@@ -141,6 +140,35 @@ out <- modelrun(data = bayesrsdata,
 # categorical main effect, and their interaction
 bf <- out[[1]]
 bf
+
+donttest{
+  # same as Example 1, but with a larger number of MCMC samples
+  # for a more reliable estimation of the Bayes factor
+  ## JAGS Sampler Settings
+  # -----------------
+  # nr of adaptation, burn-in, and saved mcmc steps only for exemplary use
+  nadapt = 2000           # number of adaptation steps
+  nburn = 2000            # number of burn-in samples
+  mcmcstep = 100000       # number of saved mcmc samples, min. should be 100'000
+  
+  # Define model structure;
+  dat.str <- data.frame(iv = c("x.time"),
+                        type = c("cont"),
+                        subject = c(1))
+  # name of random variable (here 'subject') needs to match data frame
+  
+  # Run modelrun function
+  out <- modelrun(data = bayesrsdata,
+                  dv = "y",
+                  dat.str = dat.str,
+                  nadapt = nadapt,
+                  nburn = nburn,
+                  nsteps = mcmcstep,
+                  checkconv = 0)
+  
+  # Obtain Bayes factor
+  bf <- out[[1]]
+  bf
 }
 }
 \references{

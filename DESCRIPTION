@@ -1,7 +1,7 @@
 Package: BayesRS
 Type: Package
 Title: Bayes Factors for Hierarchical Linear Models with Continuous Predictors
-Version: 0.1.0
+Version: 0.1.2
 Authors@R: c(person(given="Mirko", family="Thalmann", role=c("aut", "cre"),
              email="mirkothalmann@hotmail.com"), person(given="Marcel",
              family="Niklaus", role="aut"), person(given="Klaus",
@@ -18,8 +18,8 @@ Imports:
     methods,
     coda
 Description: Runs hierarchical linear Bayesian models. Samples from the posterior
-    distributions of model parameters in JAGS. Computes Bayes Factors for group 
-    parameters of interest with the Savage-Dickey density ratio.
+    distributions of model parameters in JAGS (Just Another Gibbs Sampler; Plummer, 2003, <https://www.r-project.org/conferences/DSC-2003/Proceedings/Plummer.pdf>). Computes Bayes factors for group 
+    parameters of interest with the Savage-Dickey density ratio (Wetzels, Raaijmakers, Jakab, Wagenmakers, 2009, <doi:10.3758/PBR.16.4.752>).
 License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
