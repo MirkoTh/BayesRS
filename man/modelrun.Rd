@@ -55,6 +55,7 @@ Bayes Factors are computed with the Savage-Dickey density ratio. We use the norm
 }
 }
 \examples{
+\dontrun{
 ## -----------------------------------------------------------------
 ## Example 1: Estimation of Bayes Factors from a continuous
 ## independent variable (IV) with random slopes
@@ -67,21 +68,21 @@ data(bayesrsdata) #load data
 ## JAGS Sampler Settings
 # -----------------
 # nr of adaptation, burn-in, and saved mcmc steps only for exemplary use
-nadapt = 150           # number of adaptation steps
-nburn = 150            # number of burn-in samples
-mcmcstep = 1500        # number of saved mcmc samples, min. should be 100'000
+nadapt = 2000           # number of adaptation steps
+nburn = 2000            # number of burn-in samples
+mcmcstep = 100000       # number of saved mcmc samples, min. should be 100'000
 
-# Define model structure; 
-dat.str <- data.frame(iv = c("x.time"), 
+# Define model structure;
+dat.str <- data.frame(iv = c("x.time"),
                       type = c("cont"),
                       subject = c(1))
 # name of random variable (here 'subject') needs to match data frame
 
 # Run modelrun function
-out <- modelrun(data = bayesrsdata, 
-                dv = "y", 
-                dat.str = dat.str, 
-                nadapt = nadapt, 
+out <- modelrun(data = bayesrsdata,
+                dv = "y",
+                dat.str = dat.str,
+                nadapt = nadapt,
                 nburn = nburn,
                 nsteps = mcmcstep,
                 checkconv = 0)
@@ -92,8 +93,8 @@ bf
 
 ## -----------------------------------------------------------------
 ## Example 2: Estimation of Bayes Factors from a continuous
-## independent variable with random slopes that 
-## are correlated with the random slopes of a categorical variable. 
+## independent variable with random slopes that
+## are correlated with the random slopes of a categorical variable.
 ## - Repeated measures for each participant
 ## - a continuous IV with 5 values: x.time
 ## - a categorical variable with 2 levels: x.domain
@@ -102,9 +103,9 @@ bf
 ## JAGS Sampler Settings
 # nr of adaptation, burn-in, and saved mcmc steps only for exemplary use
 # -----------------
-nadapt = 150           # number of adaptation steps
-nburn = 150            # number of burn-in samples
-mcmcstep = 1500        # number of saved mcmc samples, min. should be 100'000
+nadapt = 2000           # number of adaptation steps
+nburn = 2000           # number of burn-in samples
+mcmcstep = 100000        # number of saved mcmc samples, min. should be 100'000
 
 
 # Define model structure;
@@ -125,21 +126,22 @@ cor.subject[c(2,3,6)] <- 1
 corstr <- list(cor.subject)
 
 # Run modelrun function
-out <- modelrun(data = bayesrsdata, 
-                dv = "y", 
-                dat.str = dat.str, 
-                randvar.ia = randvar.ia, 
-                nadapt = nadapt, 
-                nburn = nburn, 
+out <- modelrun(data = bayesrsdata,
+                dv = "y",
+                dat.str = dat.str,
+                randvar.ia = randvar.ia,
+                nadapt = nadapt,
+                nburn = nburn,
                 nsteps = mcmcstep,
-                checkconv = 0, 
-                mcmc.save.indiv = 1, 
+                checkconv = 0,
+                mcmc.save.indiv = 1,
                 corstr = corstr)
 
 # Obtain Bayes factors for continous main effect,
 # categorical main effect, and their interaction
-bf <- out[[1]] 
+bf <- out[[1]]
 bf
+}
 }
 \references{
 Spiegelhalter, D. J., Best, N. G., Carlin, B. P., & van der Linde, A. (2002). Bayesian measures of model complexity and fit. Journal of the Royal Statistical Society: Series B (Statistical Methodology), 64(4), 583.

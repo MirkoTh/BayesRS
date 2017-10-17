@@ -8,7 +8,7 @@ ncat <- 1               # number of categorical IVs
 ntrials <- nobs * ncont * ncat #total number of trials per subject
 xcont <- seq(1,5,1)     # values of continuous IV
 xcont.mc <- xcont-mean(xcont) # mean-centered values of continuous IV
-xcat <- c(-.5,.5)             # Simple coded categorical IV       
+xcat <- c(-.5,.5)             # Simple coded categorical IV
 eff.size.cont <- c(0.3)       # effect size of continuous IV
 eff.size.cat <- c(0.8)       # effect size of categorical IV
 eff.size.interaction <- c(0)  # effect size of interaction
@@ -16,13 +16,13 @@ correlation.predictors <- 0.5     # correlation between b<-subject slopes of the
 intercept <- 0          # grand intercept
 error.sd <- 1           # standard deviation of error term
 
-#------------------------- 
+#-------------------------
 #  Create Simulated Data -
 #-------------------------
 #  correlation between by-subject continuous slope, and by-subject categorical slope
-subj.cont1.cat1.corr <- mvrnorm(n = nsubj, 
-                                mu = c(eff.size.cont,eff.size.cat), 
-                                Sigma = matrix(data = c(1,correlation.predictors,correlation.predictors,1), nrow = 2, ncol = 2, byrow = TRUE), 
+subj.cont1.cat1.corr <- mvrnorm(n = nsubj,
+                                mu = c(eff.size.cont,eff.size.cat),
+                                Sigma = matrix(data = c(1,correlation.predictors,correlation.predictors,1), nrow = 2, ncol = 2, byrow = TRUE),
                                 empirical = TRUE)
 
 b.cont.subj <- data.frame(subject = 1:nsubj, vals = subj.cont1.cat1.corr[,1])
@@ -31,8 +31,8 @@ b.subj.rand <- data.frame(subject = 1:nsubj, vals = rnorm(n = nsubj, mean = 0, s
 b.ia.subj <- data.frame(subject = 1:nsubj, vals = rnorm(n = nsubj, mean = eff.size.interaction, sd = 1))
 
 # generate according to lin reg formula
-bayesrsdata <- data.frame(subject = rep(1:nsubj, each = ntrials), 
-                          x.time = rep(xcont, each = ntrials/5), 
+bayesrsdata <- data.frame(subject = rep(1:nsubj, each = ntrials),
+                          x.time = rep(xcont, each = ntrials/5),
                           x.domain= rep(xcat, each = ntrials/10))
 
 bayesrsdata$y <- 0
@@ -53,12 +53,4 @@ bayesrsdata[,recvars] <- lapply(bayesrsdata[,recvars], as.factor)
 
 save(bayesrsdata, file= "bayesrsdata.rda")
 
-agg <- bayesrsdata%>%
-  group_by(subject,x.domain,x.time)%>%
-  summarise(y=mean(y))%>%
-  group_by(x.domain,x.time)%>%
-  summarise(y=mean(y))%>%
-  data.frame()
-
-ggplot2::ggplot(data=agg, aes(y=y, x=x.time, linetype=as.factor(x.domain),group=x.domain))+geom_line()+theme_bw()
 }
