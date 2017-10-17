@@ -17,9 +17,14 @@ Imports:
     reshape,
     methods,
     coda
+Suggests:
+	R.rsp
+VignetteBuilder: R.rsp
 Description: Runs hierarchical linear Bayesian models. Samples from the posterior
-    distributions of model parameters in JAGS (Just Another Gibbs Sampler; Plummer, 2003, <https://www.r-project.org/conferences/DSC-2003/Proceedings/Plummer.pdf>). Computes Bayes factors for group 
-    parameters of interest with the Savage-Dickey density ratio (Wetzels, Raaijmakers, Jakab, Wagenmakers, 2009, <doi:10.3758/PBR.16.4.752>).
+    distributions of model parameters in JAGS (Just Another Gibbs Sampler;
+	Plummer, 2003, <doi:10.1.1.13.3406>). Computes Bayes factors for group
+	parameters of interest with the Savage-Dickey density ratio (Wetzels,
+	Raaijmakers, Jakab, Wagenmakers, 2009, <doi:10.3758/PBR.16.4.752>).
 License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
