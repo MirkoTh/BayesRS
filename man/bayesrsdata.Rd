@@ -36,13 +36,16 @@ error.sd <- 1           # standard deviation of error term
 #  correlation between by-subject continuous slope, and by-subject categorical slope
 subj.cont1.cat1.corr <- mvrnorm(n = nsubj,
                                 mu = c(eff.size.cont,eff.size.cat),
-                                Sigma = matrix(data = c(1,correlation.predictors,correlation.predictors,1), nrow = 2, ncol = 2, byrow = TRUE),
+                                Sigma = matrix(data = c(1,correlation.predictors,
+                                                        correlation.predictors,1),
+                                               nrow = 2, ncol = 2, byrow = TRUE),
                                 empirical = TRUE)
 
 b.cont.subj <- data.frame(subject = 1:nsubj, vals = subj.cont1.cat1.corr[,1])
 b.cat.subj <- data.frame(subject = 1:nsubj, vals = subj.cont1.cat1.corr[,2])
 b.subj.rand <- data.frame(subject = 1:nsubj, vals = rnorm(n = nsubj, mean = 0, sd = 1))
-b.ia.subj <- data.frame(subject = 1:nsubj, vals = rnorm(n = nsubj, mean = eff.size.interaction, sd = 1))
+b.ia.subj <- data.frame(subject = 1:nsubj, vals = rnorm(n = nsubj,
+                                                        mean = eff.size.interaction, sd = 1))
 
 # generate according to lin reg formula
 bayesrsdata <- data.frame(subject = rep(1:nsubj, each = ntrials),
@@ -53,9 +56,12 @@ bayesrsdata$y <- 0
 
 for (i in 1:nrow(bayesrsdata)){
   bayesrsdata$y[i] <- b.subj.rand$vals[bayesrsdata$subject[i]==b.subj.rand$subject] +
-    bayesrsdata$x.time[i] * (eff.size.cont+b.cont.subj$vals[bayesrsdata$subject[i]==b.cont.subj$subject]) +
-    bayesrsdata$x.domain[i] * (eff.size.cat+b.cat.subj$vals[bayesrsdata$subject[i]==b.cat.subj$subject]) +
-    bayesrsdata$x.time[i] * bayesrsdata$x.domain[i] * (eff.size.interaction+b.ia.subj$vals[bayesrsdata$subj[i]==b.ia.subj$subject])
+    bayesrsdata$x.time[i] * (eff.size.cont+b.cont.subj$vals[bayesrsdata$subject[i]==
+                                                              b.cont.subj$subject]) +
+    bayesrsdata$x.domain[i] * (eff.size.cat+b.cat.subj$vals[bayesrsdata$subject[i]==
+                                                              b.cat.subj$subject]) +
+    bayesrsdata$x.time[i] * bayesrsdata$x.domain[i] *
+    (eff.size.interaction+b.ia.subj$vals[bayesrsdata$subj[i]==b.ia.subj$subject])
 }
 
 # add measurement error
