@@ -1,5 +1,5 @@
-library(testthat)
-library(BayesRS)
+# library(testthat)
+# library(BayesRS)
 
 # test_check("BayesRS")
-test_check()
+# test_check()
