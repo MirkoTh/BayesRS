@@ -57,8 +57,10 @@ modelrun <- function(data, dv, dat.str, randvar.ia = NULL, corstr = NULL, nadapt
   if (is.null(plot.post)) plot.post=0
   if (is.null(dic)) dic=0
   if (is.null(path)) path=file.path(tempdir(), "model.txt")
-  if (!is.null(randvar.ia) & nrow(randvar.ia[[1]])!=nrow(dat.str)|ncol(randvar.ia[[1]])!=nrow(dat.str)){
-    stop("nr. of independent variables in dat.str and randvar.ia have to match")
+  if (!is.null(randvar.ia)){
+    if(nrow(randvar.ia[[1]])!=nrow(dat.str)|ncol(randvar.ia[[1]])!=nrow(dat.str)){
+      stop("nr. of independent variables in dat.str and randvar.ia have to match")
+    }
   }
   ls<-0
   ncont<-sum(dat.str$type=="cont")
