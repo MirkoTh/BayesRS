@@ -1,5 +1,7 @@
 require(devtools)
 require(testthat)
+require(R.rsp)
+
 options(error = NULL)
 
 load_all()

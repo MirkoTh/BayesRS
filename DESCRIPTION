@@ -1,13 +1,13 @@
 Package: BayesRS
 Type: Package
 Title: Bayes Factors for Hierarchical Linear Models with Continuous Predictors
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(person(given="Mirko", family="Thalmann", role=c("aut", "cre"),
              email="mirkothalmann@hotmail.com"), person(given="Marcel",
              family="Niklaus", role="aut"), person(given="Klaus",
              family="Oberauer", role="ths"),person(given="John",
              family="Kruschke", role="ctb"))
-Depends: 
+Depends:
 	R (>= 3.0.0)
 Imports:
     rjags,
@@ -18,7 +18,8 @@ Imports:
     methods,
     coda
 Suggests:
-	R.rsp
+	R.rsp,
+    testthat
 VignetteBuilder: R.rsp
 Description: Runs hierarchical linear Bayesian models. Samples from the posterior
     distributions of model parameters in JAGS (Just Another Gibbs Sampler;
